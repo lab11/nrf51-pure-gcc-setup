@@ -11,6 +11,10 @@ GDB = $(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-gdb
 START_CODE ?= startup_nrf51.s
 SYSTEM_FILE ?= system_nrf51.c
 
+# Set hardware memory sizes
+RAM_KB ?= 16
+FLASH_KB ?= 256
+
 ifeq ($(USE_SOFTDEVICE), s110)
     USE_BLE = 1
 endif
@@ -197,7 +201,7 @@ endif
 
 print-% : ; @echo $* = $($*)
 
-LINKER_SCRIPT ?= gcc_nrf51_$(USE_SOFTDEVICE)_$(SOFTDEVICE_VERSION).ld
+LINKER_SCRIPT ?= gcc_nrf51_$(RAM_KB)_$(FLASH_KB)_$(USE_SOFTDEVICE)_$(SOFTDEVICE_VERSION).ld
 OUTPUT_NAME ?= $(addsuffix _$(USE_SOFTDEVICE), $(PROJECT_NAME))
 
 LIBRARY_INCLUDES = $(addprefix -I,$(LIBRARY_PATHS))
